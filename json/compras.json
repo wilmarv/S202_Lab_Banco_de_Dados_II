@@ -1,0 +1,14 @@
+[
+    {
+        "total": 9.46,
+        "desconto": false
+    },
+    {
+        "total": 32.85,
+        "desconto": true
+    },
+    {
+        "total": 34.980000000000004,
+        "desconto": true
+    }
+]

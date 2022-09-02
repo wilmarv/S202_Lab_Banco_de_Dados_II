@@ -1,0 +1,122 @@
+[
+    {
+        "_id": {
+            "$oid": "63114e54dc411a660b556a38"
+        },
+        "produto": "detergente",
+        "total": 9.46,
+        "cliente_id": 1,
+        "nome": [
+            {
+                "_id": 1,
+                "nome": "Joao Algusto",
+                "idade": 30
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "63114e54dc411a660b556a39"
+        },
+        "produto": "laranja",
+        "total": 12.37,
+        "cliente_id": 2,
+        "nome": [
+            {
+                "_id": 2,
+                "nome": "Cleber Almeida",
+                "idade": 50
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "63114e54dc411a660b556a3a"
+        },
+        "produto": "carne",
+        "total": 17.26,
+        "cliente_id": 2,
+        "nome": [
+            {
+                "_id": 2,
+                "nome": "Cleber Almeida",
+                "idade": 50
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "63114e54dc411a660b556a3b"
+        },
+        "produto": "mussarela",
+        "total": 6.85,
+        "cliente_id": 3,
+        "nome": [
+            {
+                "_id": 3,
+                "nome": "Marina Santos",
+                "idade": 26
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "63114e54dc411a660b556a3c"
+        },
+        "produto": "mortadela",
+        "total": 7.06,
+        "cliente_id": 3,
+        "nome": [
+            {
+                "_id": 3,
+                "nome": "Marina Santos",
+                "idade": 26
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "63114e54dc411a660b556a3d"
+        },
+        "produto": "bolacha",
+        "total": 8.98,
+        "cliente_id": 3,
+        "nome": [
+            {
+                "_id": 3,
+                "nome": "Marina Santos",
+                "idade": 26
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "63114e54dc411a660b556a3e"
+        },
+        "produto": "carne",
+        "total": 9.96,
+        "cliente_id": 3,
+        "nome": [
+            {
+                "_id": 3,
+                "nome": "Marina Santos",
+                "idade": 26
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "63114e54dc411a660b556a3f"
+        },
+        "produto": "tomate",
+        "total": 5.35,
+        "cliente_id": 2,
+        "nome": [
+            {
+                "_id": 2,
+                "nome": "Cleber Almeida",
+                "idade": 50
+            }
+        ]
+    }
+]
