@@ -29,14 +29,14 @@ pessoas = Database(
     collection="pessoas",
     dataset=pessoa_dataset
 )
-# pessoas.resetDatabase()
 
 produtos = Database(
     database="database",
     collection="produtos",
     dataset=produto_dataset
 )
-# produtos.resetDatabase()
+pessoas.resetDatabase()
+produtos.resetDatabase()
 
 compras = produtos.collection.aggregate([
     {"$lookup":
@@ -44,20 +44,21 @@ compras = produtos.collection.aggregate([
             "from": "pessoas",  # outra colecao
             "localField": "cliente_id",  # chave estrangeira
             "foreignField": "_id",  # id da outra colecao
-            "as": "clientes"  # nome da saida
-        }
-     },
+            "as": "comprador"  # nome da saida
+        }        
+    },
     {"$group":
         {
-            "_id": "$cliente_id",
+            "_id": "$comprador",
             "total": {"$sum": "$total"},
         }
      },
     {"$sort": {"total": 1}},
+    {"$unwind": '$_id'},
     {"$project":
         {
             "_id": 0,
-            "nome": 1,
+            "nome": "$_id.nome",
             "total": 1,
             "desconto": {
                 "$cond": {"if": {"$gte": ["$total", 10]}, "then": True, "else": False}
