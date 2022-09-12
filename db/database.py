@@ -1,8 +1,7 @@
 import pymongo
 
-
 class Database:
-    def __init__(self, database, collection, dataset):
+    def __init__(self, database, collection):
         connectionString = "localhost:27017"
         self.clusterConnection = pymongo.MongoClient(
             connectionString,
@@ -11,8 +10,6 @@ class Database:
         )
         self.db = self.clusterConnection[database]
         self.collection = self.db[collection]
-        self.dataset = dataset
 
     def resetDatabase(self):
         self.db.drop_collection(self.collection)
-        self.collection.insert_many(self.dataset)

@@ -1,16 +1,17 @@
-from db.pessoa import Pessoa
-from helper.WriteAJson import writeAJson
+from db.database import Database
+from sensores.sensor import Sensor
 
-pessoa = Pessoa()
+Database(database='bancoiot',collection='sensores').resetDatabase()
 
-pessoa.criaLivro("The Witcher", "Andrzej sapkowski", 1993, 50)
-pessoa.criaLivro("FullMetal Alchemist", "Hiromu Arakawa", 2001, 170)
-pessoa.criaLivro("Livo aleatorio", "Algum Famoso", 2022, 5.5)
+temp1 = Sensor("Quarto",5)
+temp1.initSensor()
 
-pessoa.alteraPreco(1, 45)
-pessoa.deletaLivro("2")
+temp2 = Sensor("Sala",10)
+temp2.initSensor()
 
-pessoa.criarIndex("ano")
+temp3 = Sensor("Cozinha",15)
+temp3.initSensor()
 
-pessoa.leLivros()
-writeAJson(pessoa.livrosLidos, "livrosLidos")
+temp1.ativaSensor()
+temp2.ativaSensor()
+temp3.ativaSensor()
