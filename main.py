@@ -1,86 +1,32 @@
-from pprintpp import pprint as pp
-from db.database import Graph
+from db.escolaDB import EscolaDB
+from model.materia import Materia
+from model.professor import Professor
+
+lucas = Professor("Lucas Guitton",26,"Filosofia")
+malu = Professor("Maria Luiza",21,"Circuitos Integrados") 
+renzo = Professor("Renzo",49,"Banco de Dados") 
+ynoguti = Professor("Carlos Ynoguti",50,"algorito de dados") 
 
 
-class PersonDAO(object):
-    def __init__(self):
-        self.db = Graph(uri='bolt://3.222.205.138:7687',
-                        user='neo4j', password='periods-poke-things')
+bancoDados = Materia("Bando de DadosII","19H30")
+algorito2 = Materia("Estrutura de dados","21H30")
 
-    def create(self, person):
-        return self.db.execute_query('CREATE (n:Person {name:$name, age:$age}) return n',
-                                     {'name': person['name'], 'age': person['age']})
+dao = EscolaDB()
 
-    def read_by_name(self, person):
-        return self.db.execute_query('MATCH (n:Person {name:$name}) RETURN n',
-                                     {'name': person['name']})
-    
-    def read_all_nodes(self):
-        return self.db.execute_query('MATCH (n) RETURN n')
+dao.createProfessor(lucas)
+dao.createProfessor(malu)
+dao.createProfessor(renzo)
+dao.createProfessor(ynoguti)
 
-    def update_age(self, person):
-        return self.db.execute_query('MATCH (n:Person {name:$name}) SET n.age = $age RETURN n',
-                                     {'name': person['name'], 'age': person['age']})
+dao.createMateria(bancoDados)
+dao.createMateria(algorito2)
 
-    def delete(self, person):
-        return self.db.execute_query('MATCH (n:Person {name:$name}) DELETE n',
-                                     {'name': person['name']})
+dao.create_relation(renzo,bancoDados,2001)
+dao.create_relation(ynoguti,algorito2,2009)
+dao.create_relation(lucas,algorito2,2018)
+dao.create_relation(malu,algorito2,2021)
 
-    def delete_all_nodes(self):
-        return self.db.execute_query('MATCH (n) DETACH DELETE n')
-
-    def create_relation(self, person1, person2, year):
-        return self.db.execute_query('MATCH (n:Person {name:$name1}), (m:Person {name:$name2}) CREATE (n)-[r:KNOWS{year: $year}]->(m) RETURN n, r, m',
-                                     {'name1': person1['name'], 'name2': person2['name'], 'year': year})
-
-    def read_relation(self, person1, person2):
-        return self.db.execute_query('MATCH (n:Person {name:$name1})-[r]->(m:Person {name:$name2}) RETURN n, r, m',
-                                     {'name1': person1['name'], 'name2': person2['name']})
-
-def divider():
-    print('\n' + '-' * 80 + '\n')
-
-dao = PersonDAO()
-
-while 1:    
-    option = input('1. Create\n2. Read\n3. Update\n4. Delete\n')
-
-    if option == '1':
-        name = input('  Name: ')
-        age = input('   Age: ')
-        person = {
-            'name': name,
-            'age': age
-        }
-        aux = dao.create(person)
-        divider()
-
-    elif option == '2':
-        aux = dao.read_all_nodes()
-        pp(aux)
-        divider()
-
-    elif option == '3':
-        name = input('  Name: ')
-        age = input('   Age: ')
-        person = {
-            'name': name,
-            'age': age
-        }
-        
-        aux = dao.update_age(person)
-        divider()
-
-    elif option == '4':
-        name = input('  Name: ')
-        person = {
-            'name': name
-        }
-        
-        aux = dao.delete(person)
-        divider()
-
-    else:
-        break
 
 dao.db.close()
+
+
