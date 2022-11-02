@@ -1,0 +1,6 @@
+[
+    {
+        "max(t.ano_nasc)": 1998,
+        "min(t.ano_nasc)": 1950
+    }
+]

@@ -1,0 +1,5 @@
+[
+    {
+        "replace(c.name,'a','A')": "SAntA RitA do SApucA\u00c3\u00ad"
+    }
+]
