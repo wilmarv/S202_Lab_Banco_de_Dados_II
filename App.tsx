@@ -1,28 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import Container from './src/componentes/Container';
-import HeaderSteam from './src/componentes/HeaderSteam';
-import Rotas from './src/rotas/rotasApp';
+import { StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Rotas from './src/rotas/RotasApp';
 
 
 export default function App() {
 
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="inverted" translucent={true} />
-      <HeaderSteam />
+    <SafeAreaView style={styles.container}>
       <Rotas />
-    </View >
+    </SafeAreaView >
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
   },
 
 });

@@ -18,11 +18,9 @@ export default HeaderSteam;
 
 const style = StyleSheet.create({
     container: {
-        alignSelf: "stretch",
         backgroundColor: "#171a21",
         justifyContent: "center",
-        alignItems: "flex-start",
-        flex: 0.1
+        height: 70
     },
     image: {
         marginTop: 10,
