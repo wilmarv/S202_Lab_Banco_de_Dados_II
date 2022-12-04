@@ -1,3 +1,4 @@
+import ConnectDb from "../neo4J/ConnectDb";
 import Jogo from "./Jogo";
 
 class Usuario {
@@ -54,6 +55,30 @@ class Usuario {
     }
     public set listaAmigos(value: Array<Usuario>) {
         this._listaAmigos = value;
+    }
+
+    async deleteGame(id: number) {
+        const connectDb = new ConnectDb();
+        const jogoEncontrado = this.findGame(id);
+
+        if (jogoEncontrado[1] >= 0) {
+            await connectDb.deleteRelationships(this._nome, jogoEncontrado[0]);
+            this._bibliotecaJogos.splice(jogoEncontrado[1], 1);
+        }
+    }
+    findGame(id: number): [String, number] {
+
+        let nome: String = "";
+        let indexJogo = -1;
+
+        this._bibliotecaJogos.forEach((jogo, index) => {
+            if (jogo.id === id) {
+                nome = jogo.nome;
+                indexJogo = index;
+                return [jogo.nome, index] as [String, number];
+            }
+        });
+        return [nome, indexJogo];
     }
 }
 export default Usuario;

@@ -1,10 +1,12 @@
 import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
+import Button from "../../componentes/Button";
 import Card from "../../componentes/Card";
 import Container from "../../componentes/Container";
 import ContainerGradient from "../../componentes/ContainerGradient";
 import Texto from "../../componentes/Texto";
+import Jogo from "../../model/Jogo";
 import Usuario from "../../model/Usuario";
 import ConnectDb from "../../neo4J/ConnectDb";
 
@@ -20,6 +22,7 @@ function Profile() {
     const [opcao, setOpcao] = useState(0);
 
     const [perfilUsuario, setPerfilUsuario] = useState<Usuario>(new Usuario("", ""));
+    const [jogoSelecionado, setJogoSelecionado] = useState<Jogo | null>();
 
     useEffect(() => {
         findAllFriends(usuario, setPerfilUsuario);
@@ -34,7 +37,7 @@ function Profile() {
                         <View style={styles.fotoVazia}></View>
                     </View>
                     <View style={styles.info}>
-                        <Texto style={styles.title}>{usuario.nome}</Texto>
+                        <Texto style={styles.title}>{perfilUsuario.nome}</Texto>
                     </View>
                 </View>
 
@@ -53,23 +56,34 @@ function Profile() {
                     </TouchableOpacity >
                 </View>
 
-                {
-                    opcao === 0 ?
-                        <FlatList
-                            data={perfilUsuario.listaAmigos}
-                            renderItem={({ item }) => <Card usuario={item} />}
-                            keyExtractor={(item) => item.id.toString()}
-                            style={{ flex: 1 }}
-                        />
-                        :
-                        <FlatList
-                            data={perfilUsuario.bibliotecaJogos}
-                            renderItem={({ item }) => <Card jogo={item} />}
-                            keyExtractor={(item) => item.id.toString()}
-                            style={{ flex: 1 }}
-                        />
+                <View style={{ flex: 1 }}>
+                    {
+                        opcao === 0 ?
+                            <FlatList
+                                data={perfilUsuario.listaAmigos}
+                                renderItem={({ item }) => <Card usuario={item} />}
+                                keyExtractor={(item) => item.id.toString()}
+                                style={{ flex: 1 }}
+                            />
+                            :
+                            <FlatList
+                                data={perfilUsuario.bibliotecaJogos}
+                                renderItem={({ item }) => <Card jogo={item} isSelected={item.id === jogoSelecionado?.id} onPress={() => setJogoSelecionado(item)} />}
+                                keyExtractor={(item) => item.id.toString()}
+                                style={{ flex: 1 }}
+                            />
+                    }
+                </View>
 
-                }
+                <View style={styles.viewButton}>
+                    <Button style={styles.button} title={"Editar Perfil"} onPress={() => { }} />
+                    <Button style={styles.button} title={"Excluir Jogo"} onPress={async () => {
+                        if (jogoSelecionado !== null && jogoSelecionado !== undefined)
+                            await perfilUsuario.deleteGame(jogoSelecionado.id)
+                        setOpcao(0);
+                        setOpcao(1);
+                    }} />
+                </View>
 
             </Container>
         </ContainerGradient>
@@ -80,7 +94,7 @@ export default Profile;
 const styles = StyleSheet.create({
     usuario: {
         flexDirection: "row",
-        flex: 0.2,
+        height: 100,
     },
     imagem: {
         borderColor: "rgba(86, 120, 134, 0.5)",
@@ -109,6 +123,7 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     tabContainer: {
+        height: 40,
         flexDirection: "row",
         borderBottomWidth: 0.5,
         borderColor: "rgba(150,150,150,0.3)",
@@ -126,5 +141,12 @@ const styles = StyleSheet.create({
         flex: 1,
         borderBottomWidth: 0.5,
         borderColor: "#FFFF"
+    },
+    viewButton: {
+        flexDirection: "row",
+    },
+    button: {
+        margin: 20,
+        flex: 1
     }
 });

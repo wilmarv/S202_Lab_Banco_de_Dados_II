@@ -7,31 +7,34 @@ interface ICard {
     onPress?: ((event: GestureResponderEvent) => void),
     jogo?: Jogo,
     usuario?: Usuario
+    isSelected?: boolean,
 }
 
-function Card({ jogo, usuario, onPress }: ICard) {
+function Card({ jogo, usuario, onPress, isSelected = false }: ICard) {
 
     const title = usuario !== undefined ? usuario.nome : jogo?.nome;
-    const descricao = usuario !== undefined ? usuario.email : `R$ ${jogo?.preco}`;
+    const descricao = usuario !== undefined ? usuario.email : `R$ ${jogo?.preco.toFixed(2).toLocaleString("pt-BR")}`;
+
+    const style = styles(isSelected);
 
     return (
-        <TouchableOpacity onPress={onPress} style={styles.container}>
-            <View style={styles.imagem}>
-                <View style={styles.fotoVazia}></View>
+        <TouchableOpacity onPress={onPress} style={style.container}>
+            <View style={style.imagem}>
+                <View style={style.fotoVazia}></View>
             </View>
-            <View style={styles.info}>
-                <Texto style={styles.title}> {title}</Texto>
-                <Texto style={styles.descricao}> {descricao}</Texto>
+            <View style={style.info}>
+                <Texto style={style.title}> {title}</Texto>
+                <Texto style={style.descricao}> {descricao}</Texto>
             </View>
         </TouchableOpacity>
     );
 }
 export default Card;
 
-const styles = StyleSheet.create({
+const styles = (isSelected: boolean) => StyleSheet.create({
     container: {
-        borderBottomWidth: 0.5,
-        borderColor: "rgba(86, 120, 134, 0.37)",
+        borderBottomWidth: isSelected ? 1 : 0.5,
+        borderColor: isSelected ? "rgb(235, 235, 235)" : "rgba(86, 120, 134, 0.37)",
         height: 80,
         marginHorizontal: 20,
         justifyContent: "space-evenly",

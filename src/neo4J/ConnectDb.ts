@@ -93,5 +93,17 @@ class ConnectDb {
         }
         return usuario;
     }
+
+    async deleteRelationships(nomeUsuario: String, nomeJogo: String) {
+        try {
+            await this.session.run(
+                "MATCH (:Usuario{nome: $nomeUsuario })-[r:Tem]-(:Jogo{nome: $nomeJogo }) Delete r",
+                { nomeUsuario: nomeUsuario, nomeJogo: nomeJogo }
+            );
+        }
+        finally {
+            await this.session.close();
+        }
+    }
 }
 export default ConnectDb;
