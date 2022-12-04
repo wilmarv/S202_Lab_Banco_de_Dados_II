@@ -12,7 +12,7 @@ interface ICard {
 function Card({ jogo, usuario, onPress }: ICard) {
 
     const title = usuario !== undefined ? usuario.nome : jogo?.nome;
-    const descricao = usuario !== undefined ? usuario.email : jogo?.preco;
+    const descricao = usuario !== undefined ? usuario.email : `R$ ${jogo?.preco}`;
 
     return (
         <TouchableOpacity onPress={onPress} style={styles.container}>

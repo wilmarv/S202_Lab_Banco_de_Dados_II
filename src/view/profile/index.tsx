@@ -5,7 +5,6 @@ import Card from "../../componentes/Card";
 import Container from "../../componentes/Container";
 import ContainerGradient from "../../componentes/ContainerGradient";
 import Texto from "../../componentes/Texto";
-import Jogo from "../../model/Jogo";
 import Usuario from "../../model/Usuario";
 import ConnectDb from "../../neo4J/ConnectDb";
 
