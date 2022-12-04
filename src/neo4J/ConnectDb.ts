@@ -1,3 +1,4 @@
+import Jogo from "../model/Jogo";
 import Usuario from "../model/Usuario";
 
 const neo4j = require('neo4j-driver');
@@ -24,13 +25,13 @@ class ConnectDb {
             );
 
             response.records.forEach((result: any) => {
-                const newUsuario = {
+                const usuario = {
                     id: result._fields[0].elementId,
                     nome: result._fields[0].properties.nome,
                     email: result._fields[0].properties.email,
                 }
-                const createUsuario = new Usuario(newUsuario.nome, newUsuario.email);
-                createUsuario.id = newUsuario.id;
+                const createUsuario = new Usuario(usuario.nome, usuario.email);
+                createUsuario.id = usuario.id;
                 arrayUsuario.push(createUsuario);
             });
         }
@@ -52,5 +53,45 @@ class ConnectDb {
         }
     }
 
+    async getRelationships(usuario: Usuario) {
+
+        usuario.listaAmigos = [];
+        usuario.bibliotecaJogos = [];
+        try {
+            const amigos = await this.session.run(
+                "MATCH (:Usuario{nome: $nome})-[:Amigo]-(amigo) RETURN amigo",
+                { nome: usuario.nome }
+            );
+            const jogos = await this.session.run(
+                "MATCH (:Usuario{nome: $nome})-[:Tem]-(jogo) RETURN jogo",
+                { nome: usuario.nome }
+            );
+
+            amigos.records.forEach((result: any) => {
+                const amigo = {
+                    id: result._fields[0].elementId,
+                    nome: result._fields[0].properties.nome,
+                    email: result._fields[0].properties.email,
+                }
+                const createUsuario = new Usuario(amigo.nome, amigo.email);
+                createUsuario.id = amigo.id;
+                usuario.listaAmigos.push(createUsuario);
+            });
+
+            jogos.records.forEach((result: any) => {
+                const jogo = {
+                    id: result._fields[0].elementId,
+                    nome: result._fields[0].properties.nome,
+                    preco: result._fields[0].properties.preco,
+                }
+                const createJogo = new Jogo(jogo.id, jogo.nome, jogo.preco);
+                usuario.bibliotecaJogos.push(createJogo);
+            });
+        }
+        finally {
+            await this.session.close();
+        }
+        return usuario;
+    }
 }
 export default ConnectDb;
