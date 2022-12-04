@@ -1,21 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import Usuario from './src/model/Usuario';
-import ConnectDb from './src/neo4J/ConnectDb';
+import Container from './src/componentes/Container';
+import HeaderSteam from './src/componentes/HeaderSteam';
+import Rotas from './src/rotas/rotasApp';
+
 
 export default function App() {
 
-  const newConnect = new ConnectDb();
-
-  const newUsuario: Usuario = new Usuario("teste", "teste@emai.com");
-
-  newConnect.createNewUsuario(newUsuario);
 
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <StatusBar style="inverted" translucent={true} />
+      <HeaderSteam />
+      <Rotas />
+    </View >
   );
 }
 
@@ -24,6 +22,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
+
 });
