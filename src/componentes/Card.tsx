@@ -1,14 +1,20 @@
 import { StyleSheet, Text, View } from "react-native";
+import Jogo from "../model/Jogo";
+import Usuario from "../model/Usuario";
 
-function Card() {
+function Card({ jogo, usuario }: { jogo?: Jogo, usuario?: Usuario }) {
+
+    const title = usuario !== undefined ? usuario.nome : jogo?.nome;
+    const descricao = usuario !== undefined ? usuario.email : jogo?.preco;
+
     return (
         <View style={styles.container}>
             <View style={styles.imagem}>
                 <View style={styles.fotoVazia}></View>
             </View>
             <View style={styles.info}>
-                <Text style={styles.title}> Wilmar Vitor Fonseca</Text>
-                <Text style={styles.descricao}> Wilmar@email.com</Text>
+                <Text style={styles.title}> {title}</Text>
+                <Text style={styles.descricao}> {descricao}</Text>
             </View>
         </View>
     );

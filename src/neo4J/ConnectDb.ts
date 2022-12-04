@@ -14,6 +14,32 @@ class ConnectDb {
             this.session = driver.session({ database: "neo4j" });
     }
 
+    async findAllUsuarios(): Promise<Array<Usuario>> {
+
+        const arrayUsuario: Array<Usuario> = [];
+
+        try {
+            const response = await this.session.run(
+                "MATCH (n:Usuario) RETURN n",
+            );
+
+            response.records.forEach((result: any) => {
+                const newUsuario = {
+                    id: result._fields[0].elementId,
+                    nome: result._fields[0].properties.nome,
+                    email: result._fields[0].properties.email,
+                }
+                const createUsuario = new Usuario(newUsuario.nome, newUsuario.email);
+                createUsuario.id = newUsuario.id;
+                arrayUsuario.push(createUsuario);
+            });
+        }
+        finally {
+            await this.session.close();
+        }
+        return arrayUsuario;
+    }
+
     async createNewUsuario(usuario: Usuario) {
         try {
             const result = await this.session.run(
