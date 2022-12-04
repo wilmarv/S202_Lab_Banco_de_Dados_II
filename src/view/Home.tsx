@@ -12,7 +12,6 @@ import ConnectDb from "../neo4J/ConnectDb";
 
 async function finAllUsuarios(setUsuario: any) {
     const usuarios = new ConnectDb();
-    setUsuario([]);
     const arrayUsuario: Array<Usuario> = await usuarios.findAllUsuarios();
     setUsuario(arrayUsuario);
 }
@@ -22,10 +21,7 @@ function Home() {
     const [listUsuario, setUsuario] = useState<Array<Usuario>>([]);
     const navigation = useNavigation();
 
-    useEffect(() => {
-        if (navigation.isFocused())
-            finAllUsuarios(setUsuario);
-    }, [navigation]);
+    finAllUsuarios(setUsuario);
 
     return (
         <ContainerGradient>
