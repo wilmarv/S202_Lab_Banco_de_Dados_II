@@ -18,7 +18,7 @@ function NewProfile() {
     return (
         <ContainerGradient>
             <Container style={styles.container}>
-                <View style={styles.formView}>
+                <View >
                     <Texto style={styles.email}> E-mail: </Texto>
                     <TextInput style={styles.input} onChangeText={setEmail}
                         value={email} />
@@ -45,9 +45,6 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: "center",
         alignItems: "center"
-    },
-    formView: {
-
     },
     nome: {
         color: "#afafaf",

@@ -105,5 +105,18 @@ class ConnectDb {
             await this.session.close();
         }
     }
+    async alterarApelido(usuario: Usuario, novoNome: String) {
+        try {
+            await this.session.run(
+                "MATCH (u:Usuario{nome: $nome }) SET u.nome= $novoNome RETURN u",
+                { nome: usuario.nome, novoNome: novoNome }
+            );
+            usuario.nome = novoNome;
+        }
+        finally {
+            await this.session.close();
+        }
+        return novoNome;
+    }
 }
 export default ConnectDb;

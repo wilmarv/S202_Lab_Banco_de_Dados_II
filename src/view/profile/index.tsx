@@ -1,6 +1,6 @@
 import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
+import { FlatList, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import Button from "../../componentes/Button";
 import Card from "../../componentes/Card";
 import Container from "../../componentes/Container";
@@ -9,6 +9,7 @@ import Texto from "../../componentes/Texto";
 import Jogo from "../../model/Jogo";
 import Usuario from "../../model/Usuario";
 import ConnectDb from "../../neo4J/ConnectDb";
+
 
 async function findAllFriends(usuario: Usuario, setAmigos: any) {
     const connectDb = new ConnectDb();
@@ -23,6 +24,8 @@ function Profile() {
 
     const [perfilUsuario, setPerfilUsuario] = useState<Usuario>(new Usuario("", ""));
     const [jogoSelecionado, setJogoSelecionado] = useState<Jogo | null>();
+    const [editarPerfil, setEditarPefil] = useState(false);
+    const [novoNome, setNovoNome] = useState("");
 
     useEffect(() => {
         findAllFriends(usuario, setPerfilUsuario);
@@ -37,7 +40,20 @@ function Profile() {
                         <View style={styles.fotoVazia}></View>
                     </View>
                     <View style={styles.info}>
-                        <Texto style={styles.title}>{perfilUsuario.nome}</Texto>
+                        {editarPerfil ?
+                            <TextInput style={styles.input} onChangeText={setNovoNome}
+                                value={novoNome} onSubmitEditing={async () => {
+                                    setEditarPefil(false);
+                                    if (novoNome !== "" && novoNome !== perfilUsuario.nome) {
+                                        const connectDb = new ConnectDb();
+                                        perfilUsuario.nome = await connectDb.alterarApelido(perfilUsuario, novoNome);
+                                        setOpcao(0);
+                                        setOpcao(1);
+                                    }
+                                }} />
+                            :
+                            <Texto style={styles.title}>{perfilUsuario.nome}</Texto>
+                        }
                     </View>
                 </View>
 
@@ -76,7 +92,7 @@ function Profile() {
                 </View>
 
                 <View style={styles.viewButton}>
-                    <Button style={styles.button} title={"Editar Perfil"} onPress={() => { }} />
+                    <Button style={styles.button} title={"Editar Perfil"} onPress={() => setEditarPefil(true)} />
                     <Button style={styles.button} title={"Excluir Jogo"} onPress={async () => {
                         if (jogoSelecionado !== null && jogoSelecionado !== undefined)
                             await perfilUsuario.deleteGame(jogoSelecionado.id)
@@ -148,5 +164,19 @@ const styles = StyleSheet.create({
     button: {
         margin: 20,
         flex: 1
-    }
+    },
+    input: {
+        paddingHorizontal: 10,
+        marginHorizontal: 10,
+        color: "rgb(235, 235, 235)",
+        height: 40,
+        borderWidth: 0.5,
+        borderRadius: 5,
+        borderColor: "rgba(86, 120, 134, 0.4)",
+        shadowColor: '#101214',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+        elevation: 2,
+    },
 });
