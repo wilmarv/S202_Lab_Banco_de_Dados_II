@@ -30,7 +30,7 @@ function Home() {
                 <Text style={styles.title}> Usuários Cadastrados</Text>
                 <FlatList
                     data={listUsuario}
-                    renderItem={({ item }) => <Card usuario={item} />}
+                    renderItem={({ item }) => <Card usuario={item} onPress={() => navigation.navigate("Profile", item)} />}
                     keyExtractor={(usuario) => usuario.id.toString() as string}
                 />
                 <Button style={styles.button} />

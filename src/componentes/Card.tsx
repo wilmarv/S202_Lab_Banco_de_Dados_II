@@ -1,14 +1,20 @@
-import { StyleSheet, Text, View } from "react-native";
+import { GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Jogo from "../model/Jogo";
 import Usuario from "../model/Usuario";
 
-function Card({ jogo, usuario }: { jogo?: Jogo, usuario?: Usuario }) {
+interface ICard {
+    onPress?: ((event: GestureResponderEvent) => void),
+    jogo?: Jogo,
+    usuario?: Usuario
+}
+
+function Card({ jogo, usuario, onPress }: ICard) {
 
     const title = usuario !== undefined ? usuario.nome : jogo?.nome;
     const descricao = usuario !== undefined ? usuario.email : jogo?.preco;
 
     return (
-        <View style={styles.container}>
+        <TouchableOpacity onPress={onPress} style={styles.container}>
             <View style={styles.imagem}>
                 <View style={styles.fotoVazia}></View>
             </View>
@@ -16,7 +22,7 @@ function Card({ jogo, usuario }: { jogo?: Jogo, usuario?: Usuario }) {
                 <Text style={styles.title}> {title}</Text>
                 <Text style={styles.descricao}> {descricao}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 }
 export default Card;

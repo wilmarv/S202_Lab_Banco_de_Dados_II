@@ -1,7 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-function Container({ children }: any) {
+function ContainerGradient({ children }: any) {
     return (
         <LinearGradient
             colors={["rgba(86, 120, 134, 0.7)", "rgba(70, 106, 128, 0.45)"]}
@@ -12,7 +12,7 @@ function Container({ children }: any) {
         </LinearGradient>
     );
 }
-export default Container;
+export default ContainerGradient;
 
 const styles = StyleSheet.create({
     linearGradient: {
