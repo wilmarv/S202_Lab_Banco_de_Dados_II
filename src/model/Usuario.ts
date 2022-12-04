@@ -66,7 +66,7 @@ class Usuario {
             this._bibliotecaJogos.splice(jogoEncontrado[1], 1);
         }
     }
-    findGame(id: number): [String, number] {
+    private findGame(id: number): [String, number] {
 
         let nome: String = "";
         let indexJogo = -1;
