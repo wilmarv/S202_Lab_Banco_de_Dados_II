@@ -1,11 +1,11 @@
 import { StyleSheet, View, Dimensions } from "react-native";
 
-const height = Dimensions.get("screen").height*0.8;
-const width = Dimensions.get("screen").width*0.8;
+const height = Dimensions.get("screen").height * 0.8;
+const width = Dimensions.get("screen").width * 0.8;
 
-function Container({ children }: any) {
+function Container({ children, style }: any) {
     return (
-        <View style={styles.Container} children={children} />
+        <View style={{ ...styles.Container, ...style }} children={children} />
     );
 }
 export default Container;

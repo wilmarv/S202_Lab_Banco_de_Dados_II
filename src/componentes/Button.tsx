@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import Texto from "./Texto";
 
-function Button({ style }: any) {
+function Button({ title, style, onPress }: any) {
     return (
-        <View style={{ ...styles.container, ...style }}>
-            <Text style={styles.text}> Novo Usuario</Text>
-        </View>
+        <TouchableOpacity onPress={onPress} style={{ ...styles.container, ...style }}>
+            <Texto style={styles.text}> {title}</Texto>
+        </TouchableOpacity>
     );
 }
 export default Button;

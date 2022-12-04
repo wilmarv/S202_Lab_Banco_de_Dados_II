@@ -42,14 +42,10 @@ class ConnectDb {
 
     async createNewUsuario(usuario: Usuario) {
         try {
-            const result = await this.session.run(
+            await this.session.run(
                 "CREATE (n:Usuario {nome: $nome, email: $email}) RETURN n",
                 { nome: usuario.nome, email: usuario.email }
             );
-            const singleRecord = result.records[0];
-            const node = singleRecord.get(0);
-
-            console.log(result);
         }
         finally {
             await this.session.close();

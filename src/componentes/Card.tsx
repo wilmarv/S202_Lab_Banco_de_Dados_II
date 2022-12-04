@@ -1,6 +1,7 @@
-import { GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { GestureResponderEvent, StyleSheet, TouchableOpacity, View } from "react-native";
 import Jogo from "../model/Jogo";
 import Usuario from "../model/Usuario";
+import Texto from "./Texto";
 
 interface ICard {
     onPress?: ((event: GestureResponderEvent) => void),
@@ -19,8 +20,8 @@ function Card({ jogo, usuario, onPress }: ICard) {
                 <View style={styles.fotoVazia}></View>
             </View>
             <View style={styles.info}>
-                <Text style={styles.title}> {title}</Text>
-                <Text style={styles.descricao}> {descricao}</Text>
+                <Texto style={styles.title}> {title}</Texto>
+                <Texto style={styles.descricao}> {descricao}</Texto>
             </View>
         </TouchableOpacity>
     );
@@ -61,11 +62,11 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 12,
-        color: "rgb(235, 235, 235)"
+        fontWeight: "400"
     },
     descricao: {
         fontSize: 10,
         marginTop: 5,
-        color: "rgb(235, 235, 235)"
+        fontWeight: "400"
     }
 });
