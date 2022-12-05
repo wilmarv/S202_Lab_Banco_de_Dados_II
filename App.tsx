@@ -9,7 +9,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style='light' />
+      <StatusBar style='light' backgroundColor='#171a21' />
       <Rotas />
     </SafeAreaView >
   );
